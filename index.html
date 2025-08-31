@@ -1044,7 +1044,7 @@
     <script>
         // Variables globales
         let timerRunning = false;
-        let timeLeft = 90 * 60; // 90 minutes en secondes
+        let timeLeft = 60 * 60; // 90 minutes en secondes
         let timerInterval;
         let answers = {};
         let corrected = false;
@@ -1305,7 +1305,7 @@
             if (confirm('Êtes-vous sûr de vouloir recommencer le QCM ? Toutes vos réponses seront perdues.')) {
                 answers = {};
                 corrected = false;
-                timeLeft = 90 * 60;
+                timeLeft = 60 * 60;
                 
                 // Reset des inputs
                 document.querySelectorAll('input[type="radio"]').forEach(input => {
