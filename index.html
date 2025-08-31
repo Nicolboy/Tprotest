@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCM Interactif - Évaluation Diagnostique Mathématiques</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .question-box {
+            transition: all 0.3s ease;
+            border-left: 4px solid #e5e7eb;
+        }
+        .question-box.correct {
+            border-left-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .question-box.incorrect {
+            border-left-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .answer-choice {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .answer-choice:hover {
+            background-color: #f3f4f6;
+        }
+        .answer-choice.correct {
+            background-color: #dcfce7;
+            border-color: #16a34a;
+        }
+        .answer-choice.incorrect {
+            background-color: #fee2e2;
+            border-color: #dc2626;
+        }
+        .answer-choice.selected {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section-score {
+            transition: all 0.3s ease;
+        }
+        .timer {
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <div class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">QCM Interactif - Mathématiques</h1>
+                    <p class="text-gray-600">Terminale Bac Pro</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="timer text-xl font-bold text-blue-600" id="timer">01:30:00</div>
+                    <button onclick="toggleTimer()" id="timerBtn" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="mt-4">
+                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                    <span>Progression</span>
+                    <span id="progressText">0/25</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="progress-bar bg-blue-600 h-2 rounded-full" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Instructions -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 fade-in">
+            <h3 class="font-bold text-lg mb-4 flex items-center">
+                <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                Instructions
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <ul class="space-y-2">
+                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Sélectionnez une réponse par question</li>
+                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Calculatrice autorisée</li>
+                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>25 questions au total</li>
+                </ul>
+                <div class="text-right">
+                    <div class="text-sm text-gray-600">Votre score</div>
+                    <div class="text-3xl font-bold text-blue-600" id="currentScore">0/25</div>
+                    <div class="text-sm text-gray-500" id="currentPercentage">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section I : Mathématiques de base -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 fade-in">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-blue-600 flex items-center">
+                    <i class="fas fa-calculator mr-2"></i>
+                    I. MATHÉMATIQUES DE BASE (32 points)
+                </h2>
+                <div class="section-score bg-blue-100 px-3 py-1 rounded" id="score-section1">
+                    Score: <span class="font-bold">0/8</span>
+                </div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="1" data-correct="b">
+                <h4 class="font-bold mb-3">Question 1 (4 points) - Fonctions</h4>
+                <p class="mb-3">Soit f(x) = 2x + 3. Calculer f(5) :</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q1" value="a" class="mr-2"> a) 10
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q1" value="b" class="mr-2"> b) 13
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q1" value="c" class="mr-2"> c) 8
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q1" value="d" class="mr-2"> d) 15
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-blue-50 border-l-4 border-blue-400">
+                    <strong>Explication :</strong> f(5) = 2×5 + 3 = 10 + 3 = 13
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="2" data-correct="b">
+                <h4 class="font-bold mb-3">Question 2 (4 points) - Statistiques</h4>
+                <p class="mb-3">Les notes d'un élève sont : 12, 15, 8, 16, 14. La moyenne est :</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q2" value="a" class="mr-2"> a) 12
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q2" value="b" class="mr-2"> b) 13
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q2" value="c" class="mr-2"> c) 14
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q2" value="d" class="mr-2"> d) 15
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-blue-50 border-l-4 border-blue-400">
+                    <strong>Explication :</strong> Moyenne = (12+15+8+16+14)/5 = 65/5 = 13
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="3" data-correct="c">
+                <h4 class="font-bold mb-3">Question 3 (4 points) - Équations</h4>
+                <p class="mb-3">Résoudre : 3x - 7 = 8</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q3" value="a" class="mr-2"> a) x = 3
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q3" value="b" class="mr-2"> b) x = 15
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q3" value="c" class="mr-2"> c) x = 5
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q3" value="d" class="mr-2"> d) x = 1
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-blue-50 border-l-4 border-blue-400">
+                    <strong>Explication :</strong> 3x - 7 = 8 → 3x = 15 → x = 5
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="4" data-correct="a">
+                <h4 class="font-bold mb-3">Question 4 (4 points) - Pourcentages</h4>
+                <p class="mb-3">Un article coûte 80€. On applique une remise de 25%. Le nouveau prix est :</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q4" value="a" class="mr-2"> a) 60€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q4" value="b" class="mr-2"> b) 55€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q4" value="c" class="mr-2"> c) 65€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q4" value="d" class="mr-2"> d) 70€
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-blue-50 border-l-4 border-blue-400">
+                    <strong>Explication :</strong> Remise = 80 × 25% = 20€. Nouveau prix = 80 - 20 = 60€
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="5" data-correct="b">
+                <h4 class="font-bold mb-3">Question 5 (4 points) - Fractions</h4>
+                <p class="mb-3">Calculer : 2/3 + 1/4 =</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q5" value="a" class="mr-2"> a) 3/7
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q5" value="b" class="mr-2"> b) 11/12
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q5" value="c" class="mr-2"> c) 8/12
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q5" value="d" class="mr-2"> d) 5/6
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-blue-50 border-l-4 border-blue-400">
+                    <strong>Explication :</strong> 2/3 + 1/4 = 8/12 + 3/12 = 11/12
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="6" data-correct="b">
+                <h4 class="font-bold mb-3">Question 6 (4 points) - Proportionnalité</h4>
+                <p class="mb-3">Si 3 kg de pommes coûtent 9€, combien coûtent 5 kg ?</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q6" value="a" class="mr-2"> a) 12€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q6" value="b" class="mr-2"> b) 15€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q6" value="c" class="mr-2"> c) 18€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q6" value="d" class="mr-2"> d) 21€
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-blue-50 border-l-4 border-blue-400">
+                    <strong>Explication :</strong> Prix par kg = 9€/3kg = 3€/kg. Donc 5kg = 5×3 = 15€
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="7" data-correct="a">
+                <h4 class="font-bold mb-3">Question 7 (4 points) - Puissances</h4>
+                <p class="mb-3">Calculer : 2³ × 2² =</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q7" value="a" class="mr-2"> a) 2⁵
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q7" value="b" class="mr-2"> b) 2⁶
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q7" value="c" class="mr-2"> c) 4⁵
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q7" value="d" class="mr-2"> d) 64
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-blue-50 border-l-4 border-blue-400">
+                    <strong>Explication :</strong> 2³ × 2² = 2^(3+2) = 2⁵ (règle des puissances)
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="8" data-correct="b">
+                <h4 class="font-bold mb-3">Question 8 (4 points) - Probabilités</h4>
+                <p class="mb-3">On lance un dé à 6 faces. La probabilité d'obtenir un nombre pair est :</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q8" value="a" class="mr-2"> a) 1/3
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q8" value="b" class="mr-2"> b) 1/2
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q8" value="c" class="mr-2"> c) 2/3
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q8" value="d" class="mr-2"> d) 3/6
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-blue-50 border-l-4 border-blue-400">
+                    <strong>Explication :</strong> Nombres pairs : 2, 4, 6 (3 cas favorables sur 6). P = 3/6 = 1/2
+                </div>
+            </div>
+        </div>
+
+        <!-- Section II : Géométrie -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 fade-in">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-green-600 flex items-center">
+                    <i class="fas fa-shapes mr-2"></i>
+                    II. GÉOMÉTRIE AVEC ILLUSTRATIONS (28 points)
+                </h2>
+                <div class="section-score bg-green-100 px-3 py-1 rounded" id="score-section2">
+                    Score: <span class="font-bold">0/7</span>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="9" data-correct="b">
+                <h4 class="font-bold mb-3">Question 9 (4 points) - Aire d'un rectangle</h4>
+                <p class="mb-3">Calculer l'aire de ce rectangle :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="200" height="120" viewBox="0 0 200 120">
+                        <rect x="20" y="20" width="120" height="60" fill="none" stroke="blue" stroke-width="2"/>
+                        <text x="80" y="95" text-anchor="middle" font-size="12" fill="black">8 cm</text>
+                        <text x="160" y="55" text-anchor="middle" font-size="12" fill="black">5 cm</text>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q9" value="a" class="mr-2"> a) 26 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q9" value="b" class="mr-2"> b) 40 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q9" value="c" class="mr-2"> c) 13 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q9" value="d" class="mr-2"> d) 80 cm²
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-green-50 border-l-4 border-green-400">
+                    <strong>Explication :</strong> Aire = longueur × largeur = 8 × 5 = 40 cm²
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="10" data-correct="b">
+                <h4 class="font-bold mb-3">Question 10 (4 points) - Aire d'un triangle</h4>
+                <p class="mb-3">Calculer l'aire de ce triangle :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="200" height="140" viewBox="0 0 200 140">
+                        <polygon points="50,100 150,100 100,40" fill="none" stroke="red" stroke-width="2"/>
+                        <text x="100" y="120" text-anchor="middle" font-size="12" fill="black">10 cm</text>
+                        <text x="100" y="80" text-anchor="middle" font-size="12" fill="black">6 cm</text>
+                        <line x1="100" y1="40" x2="100" y2="100" stroke="gray" stroke-dasharray="2,2"/>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q10" value="a" class="mr-2"> a) 60 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q10" value="b" class="mr-2"> b) 30 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q10" value="c" class="mr-2"> c) 16 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q10" value="d" class="mr-2"> d) 120 cm²
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-green-50 border-l-4 border-green-400">
+                    <strong>Explication :</strong> Aire = (base × hauteur) / 2 = (10 × 6) / 2 = 30 cm²
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="11" data-correct="c">
+                <h4 class="font-bold mb-3">Question 11 (4 points) - Volume d'un cube</h4>
+                <p class="mb-3">Calculer le volume de ce cube :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="200" height="160" viewBox="0 0 200 160">
+                        <rect x="50" y="60" width="80" height="80" fill="lightblue" stroke="blue" stroke-width="2"/>
+                        <path d="M130 60 L160 30 L160 110 L130 140 Z" fill="lightcyan" stroke="blue" stroke-width="2"/>
+                        <path d="M50 60 L80 30 L160 30 L130 60 Z" fill="lightsteelblue" stroke="blue" stroke-width="2"/>
+                        <text x="90" y="155" text-anchor="middle" font-size="12" fill="black">4 cm</text>
+                        <text x="35" y="105" text-anchor="middle" font-size="12" fill="black">4 cm</text>
+                        <text x="163" y="130" text-anchor="middle" font-size="12" fill="black">4 cm</text>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q11" value="a" class="mr-2"> a) 16 cm³
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q11" value="b" class="mr-2"> b) 12 cm³
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q11" value="c" class="mr-2"> c) 64 cm³
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q11" value="d" class="mr-2"> d) 48 cm³
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-green-50 border-l-4 border-green-400">
+                    <strong>Explication :</strong> Volume = côté³ = 4³ = 64 cm³
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="12" data-correct="b">
+                <h4 class="font-bold mb-3">Question 12 (4 points) - Périmètre d'un cercle</h4>
+                <p class="mb-3">Calculer le périmètre de ce cercle (π ≈ 3,14) :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="200" height="140" viewBox="0 0 200 140">
+                        <circle cx="100" cy="70" r="40" fill="none" stroke="green" stroke-width="2"/>
+                        <line x1="100" y1="70" x2="140" y2="70" stroke="gray" stroke-width="1"/>
+                        <text x="120" y="85" text-anchor="middle" font-size="12" fill="black">5 cm</text>
+                        <circle cx="100" cy="70" r="2" fill="gray"/>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q12" value="a" class="mr-2"> a) 15,7 cm
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q12" value="b" class="mr-2"> b) 31,4 cm
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q12" value="c" class="mr-2"> c) 78,5 cm
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q12" value="d" class="mr-2"> d) 10 cm
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-green-50 border-l-4 border-green-400">
+                    <strong>Explication :</strong> Périmètre = 2πr = 2 × 3,14 × 5 = 31,4 cm
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="13" data-correct="b">
+                <h4 class="font-bold mb-3">Question 13 (4 points) - Volume d'un cylindre</h4>
+                <p class="mb-3">Calculer le volume de ce cylindre (π ≈ 3,14) :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="200" height="160" viewBox="0 0 200 160">
+                        <ellipse cx="100" cy="130" rx="40" ry="10" fill="lightgray" stroke="black" stroke-width="2"/>
+                        <rect x="60" y="50" width="80" height="80" fill="lightblue" stroke="black" stroke-width="2"/>
+                        <ellipse cx="100" cy="50" rx="40" ry="10" fill="lightcyan" stroke="black" stroke-width="2"/>
+                        <text x="25" y="90" text-anchor="middle" font-size="12" fill="black">8 cm</text>
+                        <text x="100" y="155" text-anchor="middle" font-size="12" fill="black">r = 3 cm</text>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q13" value="a" class="mr-2"> a) 72 cm³
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q13" value="b" class="mr-2"> b) 226,08 cm³
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q13" value="c" class="mr-2"> c) 24 cm³
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q13" value="d" class="mr-2"> d) 75,36 cm³
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-green-50 border-l-4 border-green-400">
+                    <strong>Explication :</strong> Volume = πr²h = 3,14 × 3² × 8 = 3,14 × 9 × 8 = 226,08 cm³
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="14" data-correct="a">
+                <h4 class="font-bold mb-3">Question 14 (4 points) - Théorème de Pythagore</h4>
+                <p class="mb-3">Dans ce triangle rectangle, calculer la longueur de l'hypoténuse :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="200" height="140" viewBox="0 0 200 140">
+                        <polygon points="50,100 150,100 50,50" fill="none" stroke="purple" stroke-width="2"/>
+                        <rect x="50" y="90" width="10" height="10" fill="none" stroke="purple" stroke-width="1"/>
+                        <text x="100" y="120" text-anchor="middle" font-size="12" fill="black">6 cm</text>
+                        <text x="35" y="80" text-anchor="middle" font-size="12" fill="black">8 cm</text>
+                        <text x="105" y="70" text-anchor="middle" font-size="12" fill="black">? cm</text>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q14" value="a" class="mr-2"> a) 10 cm
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q14" value="b" class="mr-2"> b) 14 cm
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q14" value="c" class="mr-2"> c) 12 cm
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q14" value="d" class="mr-2"> d) 100 cm
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-green-50 border-l-4 border-green-400">
+                    <strong>Explication :</strong> c² = a² + b² = 6² + 8² = 36 + 64 = 100, donc c = 10 cm
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="15" data-correct="d">
+                <h4 class="font-bold mb-3">Question 15 (4 points) - Aire d'un losange</h4>
+                <p class="mb-3">Calculer l'aire de ce losange :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="200" height="140" viewBox="0 0 200 140">
+                        <polygon points="100,30 150,70 100,110 50,70" fill="none" stroke="orange" stroke-width="2"/>
+                        <line x1="50" y1="70" x2="150" y2="70" stroke="gray" stroke-dasharray="2,2"/>
+                        <line x1="100" y1="30" x2="100" y2="110" stroke="gray" stroke-dasharray="2,2"/>
+                        <text x="100" y="25" text-anchor="middle" font-size="12" fill="black">d₁ = 8 cm</text>
+                        <text x="175" y="75" text-anchor="middle" font-size="12" fill="black">d₂ = 6 cm</text>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q15" value="a" class="mr-2"> a) 48 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q15" value="b" class="mr-2"> b) 28 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q15" value="c" class="mr-2"> c) 14 cm²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q15" value="d" class="mr-2"> d) 24 cm²
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-green-50 border-l-4 border-green-400">
+                    <strong>Explication :</strong> Aire = (d₁ × d₂) / 2 = (8 × 6) / 2 = 24 cm²
+                </div>
+            </div>
+        </div>
+
+        <!-- Section III : Fonctions -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 fade-in">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-purple-600 flex items-center">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    III. FONCTIONS AVEC GRAPHIQUES (20 points)
+                </h2>
+                <div class="section-score bg-purple-100 px-3 py-1 rounded" id="score-section3">
+                    Score: <span class="font-bold">0/5</span>
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="16" data-correct="b">
+                <h4 class="font-bold mb-3">Question 16 (4 points) - Lecture graphique</h4>
+                <p class="mb-3">D'après ce graphique, quelle est la valeur de f(2) ?</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="300" height="200" viewBox="0 0 300 200">
+                        <line x1="30" y1="170" x2="270" y2="170" stroke="black" stroke-width="1"/>
+                        <line x1="150" y1="20" x2="150" y2="190" stroke="black" stroke-width="1"/>
+                        <text x="145" y="185" font-size="10">0</text>
+                        <text x="190" y="185" font-size="10">2</text>
+                        <text x="230" y="185" font-size="10">4</text>
+                        <text x="110" y="185" font-size="10">-2</text>
+                        <text x="155" y="90" font-size="10">4</text>
+                        <text x="155" y="130" font-size="10">2</text>
+                        <path d="M70 150 Q150 80 190 130 T230 100" fill="none" stroke="red" stroke-width="2"/>
+                        <circle cx="190" cy="130" r="3" fill="red"/>
+                        <line x1="190" y1="170" x2="190" y2="130" stroke="gray" stroke-dasharray="2,2"/>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q16" value="a" class="mr-2"> a) 1
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q16" value="b" class="mr-2"> b) 2
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q16" value="c" class="mr-2"> c) 3
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q16" value="d" class="mr-2"> d) 4
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-purple-50 border-l-4 border-purple-400">
+                    <strong>Explication :</strong> En x = 2, la courbe passe par le point (2, 2), donc f(2) = 2
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="17" data-correct="d">
+                <h4 class="font-bold mb-3">Question 17 (4 points) - Fonction linéaire</h4>
+                <p class="mb-3">Quelle est l'équation de cette droite ?</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="300" height="200" viewBox="0 0 300 200">
+                        <line x1="30" y1="170" x2="270" y2="170" stroke="black" stroke-width="1"/>
+                        <line x1="150" y1="20" x2="150" y2="190" stroke="black" stroke-width="1"/>
+                        <text x="145" y="185" font-size="10">0</text>
+                        <text x="190" y="185" font-size="10">2</text>
+                        <text x="230" y="185" font-size="10">4</text>
+                        <text x="110" y="185" font-size="10">-2</text>
+                        <text x="155" y="90" font-size="10">4</text>
+                        <text x="155" y="130" font-size="10">2</text>
+                        <line x1="70" y1="210" x2="230" y2="50" stroke="blue" stroke-width="2" clip-path="url(#clip)"/>
+                        <circle cx="150" cy="130" r="2" fill="blue"/>
+                        <circle cx="190" cy="90" r="2" fill="blue"/>
+                        <defs>
+                            <clipPath id="clip">
+                                <rect x="30" y="20" width="240" height="170"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q17" value="a" class="mr-2"> a) y = x + 1
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q17" value="b" class="mr-2"> b) y = -x + 3
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q17" value="c" class="mr-2"> c) y = -2x - 1
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q17" value="d" class="mr-2"> d) y = x + 2
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-purple-50 border-l-4 border-purple-400">
+                    <strong>Explication :</strong> La droite passe par (0,2) et (2,4). Pente = 1, ordonnée à l'origine = 2. Donc y = x + 2
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="18" data-correct="d">
+                <h4 class="font-bold mb-3">Question 18 (4 points) - Parabole</h4>
+                <p class="mb-3">Cette parabole représente la fonction :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="300" height="200" viewBox="0 0 300 200">
+                        <line x1="30" y1="170" x2="270" y2="170" stroke="black" stroke-width="1"/>
+                        <line x1="150" y1="20" x2="150" y2="190" stroke="black" stroke-width="1"/>
+                        <text x="145" y="185" font-size="10">0</text>
+                        <text x="190" y="185" font-size="10">1</text>
+                        <text x="110" y="185" font-size="10">-1</text>
+                        <text x="155" y="150" font-size="10">1</text>
+                        <path d="M90 90 Q150 190 210 90" fill="none" stroke="green" stroke-width="2"/>
+                        <circle cx="150" cy="140" r="2" fill="green"/>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q18" value="a" class="mr-2"> a) f(x) = x²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q18" value="b" class="mr-2"> b) f(x) = -x²
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q18" value="c" class="mr-2"> c) f(x) = x² + 1
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q18" value="d" class="mr-2"> d) f(x) = -x² + 1
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-purple-50 border-l-4 border-purple-400">
+                    <strong>Explication :</strong> Parabole concave vers le haut avec minimum en (0,1), donc f(x) = x² + 1
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="19" data-correct="c">
+                <h4 class="font-bold mb-3">Question 19 (4 points) - Intersection</h4>
+                <p class="mb-3">Les deux droites se croisent au point :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="300" height="200" viewBox="0 0 300 200">
+                        <line x1="30" y1="170" x2="270" y2="170" stroke="black" stroke-width="1"/>
+                        <line x1="150" y1="20" x2="150" y2="190" stroke="black" stroke-width="1"/>
+                        <text x="145" y="185" font-size="10">0</text>
+                        <text x="170" y="185" font-size="10">1</text>
+                        <text x="190" y="185" font-size="10">2</text>
+                        <text x="130" y="185" font-size="10">-1</text>
+                        <text x="155" y="150" font-size="10">1</text>
+                        <text x="155" y="130" font-size="10">2</text>
+                        <text x="155" y="110" font-size="10">3</text>
+                        <line x1="70" y1="135" x2="235" y2="90" stroke="red" stroke-width="2"/>
+                        <line x1="75" y1="190" x2="235" y2="50" stroke="blue" stroke-width="2"/>
+                        <circle cx="170" cy="110" r="3" fill="black"/>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q19" value="a" class="mr-2"> a) (1 ; 1)
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q19" value="b" class="mr-2"> b) (2 ; 2)
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q19" value="c" class="mr-2"> c) (1 ; 3)
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q19" value="d" class="mr-2"> d) (0 ; 1)
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-purple-50 border-l-4 border-purple-400">
+                    <strong>Explication :</strong> Le point d'intersection se situe en x = 1 et y = 3, donc (1 ; 3)
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="20" data-correct="b">
+                <h4 class="font-bold mb-3">Question 20 (4 points) - Croissance</h4>
+                <p class="mb-3">Sur quel(s) intervalle(s) cette fonction est-elle croissante ?</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <svg width="300" height="200" viewBox="0 0 300 200">
+                        <line x1="30" y1="170" x2="270" y2="170" stroke="black" stroke-width="1"/>
+                        <line x1="150" y1="20" x2="150" y2="190" stroke="black" stroke-width="1"/>
+                        <text x="145" y="185" font-size="10">0</text>
+                        <text x="170" y="185" font-size="10">1</text>
+                        <text x="190" y="185" font-size="10">2</text>
+                        <text x="130" y="185" font-size="10">-1</text>
+                        <path d="M90 60 Q150 160 210 60" fill="none" stroke="purple" stroke-width="2"/>
+                        <circle cx="150" cy="160" r="2" fill="purple"/>
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q20" value="a" class="mr-2"> a) [-1 ; 0]
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q20" value="b" class="mr-2"> b) [0 ; 2]
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q20" value="c" class="mr-2"> c) [-1 ; 2]
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q20" value="d" class="mr-2"> d) [-2 ; 2]
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-purple-50 border-l-4 border-purple-400">
+                    <strong>Explication :</strong> La fonction décroît de -1 à 0 (minimum), puis croît de 0 à 2
+                </div>
+            </div>
+        </div>
+
+        <!-- Section IV : Logique -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 fade-in">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-red-600 flex items-center">
+                    <i class="fas fa-brain mr-2"></i>
+                    IV. LOGIQUE ET SUITES VISUELLES (12 points)
+                </h2>
+                <div class="section-score bg-red-100 px-3 py-1 rounded" id="score-section4">
+                    Score: <span class="font-bold">0/3</span>
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="21" data-correct="c">
+                <h4 class="font-bold mb-3">Question 21 (4 points) - Suite de formes</h4>
+                <p class="mb-3">Quelle forme complète logiquement cette séquence ?</p>
+                <div class="flex justify-center items-center my-4 bg-white p-4 rounded">
+                    <div class="flex items-center space-x-4">
+                        <svg width="40" height="40"><polygon points="20,5 35,30 5,30" fill="white" stroke="black" stroke-width="2"/></svg>
+                        <svg width="40" height="40"><polygon points="20,5 35,30 5,30" fill="lightgray" stroke="black" stroke-width="2"/></svg>
+                        <svg width="40" height="40"><polygon points="20,5 35,30 5,30" fill="gray" stroke="black" stroke-width="2"/></svg>
+                        <span class="text-2xl">?</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="a">
+                        <input type="radio" name="q21" value="a" class="mr-2"> 
+                        <span class="mr-2">a)</span>
+                        <svg width="30" height="30"><polygon points="15,3 26,22 4,22" fill="white" stroke="black" stroke-width="2"/></svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="b">
+                        <input type="radio" name="q21" value="b" class="mr-2"> 
+                        <span class="mr-2">b)</span>
+                        <svg width="30" height="30"><polygon points="15,3 26,22 4,22" fill="gray" stroke="black" stroke-width="2"/></svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="c">
+                        <input type="radio" name="q21" value="c" class="mr-2"> 
+                        <span class="mr-2">c)</span>
+                        <svg width="30" height="30"><polygon points="15,3 26,22 4,22" fill="black" stroke="black" stroke-width="2"/></svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="d">
+                        <input type="radio" name="q21" value="d" class="mr-2"> 
+                        <span class="mr-2">d)</span>
+                        <svg width="30" height="30"><rect x="4" y="4" width="22" height="22" fill="white" stroke="black" stroke-width="2"/></svg>
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-red-50 border-l-4 border-red-400">
+                    <strong>Explication :</strong> La séquence montre un triangle qui devient progressivement plus foncé : blanc → gris clair → gris → noir
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="22" data-correct="a">
+                <h4 class="font-bold mb-3">Question 22 (4 points) - Motifs géométriques</h4>
+                <p class="mb-3">Complétez cette grille selon la logique :</p>
+                <div class="flex justify-center my-4 bg-white p-4 rounded">
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center">
+                            <svg width="24" height="24"><circle cx="12" cy="12" r="8" fill="black"/></svg>
+                        </div>
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center">
+                            <svg width="24" height="24"><rect x="4" y="4" width="16" height="16" fill="gray"/></svg>
+                        </div>
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center">
+                            <svg width="24" height="24"><polygon points="12,4 20,16 4,16" fill="white" stroke="black" stroke-width="2"/></svg>
+                        </div>
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center">
+                            <svg width="24" height="24"><rect x="4" y="4" width="16" height="16" fill="black"/></svg>
+                        </div>
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center">
+                            <svg width="24" height="24"><polygon points="12,4 20,16 4,16" fill="gray"/></svg>
+                        </div>
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center">
+                            <svg width="24" height="24"><circle cx="12" cy="12" r="8" fill="white" stroke="black" stroke-width="2"/></svg>
+                        </div>
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center">
+                            <svg width="24" height="24"><polygon points="12,4 20,16 4,16" fill="black"/></svg>
+                        </div>
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center">
+                            <svg width="24" height="24"><circle cx="12" cy="12" r="8" fill="gray"/></svg>
+                        </div>
+                        <div class="w-12 h-12 border-2 border-gray-400 flex items-center justify-center text-xl">
+                            ?
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="a">
+                        <input type="radio" name="q22" value="a" class="mr-2"> 
+                        <span class="mr-2">a)</span>
+                        <svg width="30" height="30"><rect x="6" y="6" width="18" height="18" fill="white" stroke="black" stroke-width="2"/></svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="b">
+                        <input type="radio" name="q22" value="b" class="mr-2"> 
+                        <span class="mr-2">b)</span>
+                        <svg width="30" height="30"><rect x="6" y="6" width="18" height="18" fill="gray"/></svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="c">
+                        <input type="radio" name="q22" value="c" class="mr-2"> 
+                        <span class="mr-2">c)</span>
+                        <svg width="30" height="30"><rect x="6" y="6" width="18" height="18" fill="black"/></svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="d">
+                        <input type="radio" name="q22" value="d" class="mr-2"> 
+                        <span class="mr-2">d)</span>
+                        <svg width="30" height="30"><circle cx="15" cy="15" r="9" fill="black"/></svg>
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-red-50 border-l-4 border-red-400">
+                    <strong>Explication :</strong> Chaque ligne et colonne contient un cercle, un carré et un triangle avec les couleurs noir, gris et blanc
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="23" data-correct="a">
+                <h4 class="font-bold mb-3">Question 23 (4 points) - Rotation de formes</h4>
+                <p class="mb-3">Quelle est la prochaine étape de cette rotation ?</p>
+                <div class="flex justify-center items-center my-4 bg-white p-4 rounded">
+                    <div class="flex items-center space-x-6">
+                        <svg width="40" height="40">
+                            <rect x="4" y="12" width="32" height="8" fill="blue"/>
+                            <rect x="16" y="4" width="8" height="32" fill="red"/>
+                        </svg>
+                        <svg width="40" height="40">
+                            <rect x="12" y="4" width="8" height="32" fill="blue"/>
+                            <rect x="4" y="16" width="32" height="8" fill="red"/>
+                        </svg>
+                        <svg width="40" height="40">
+                            <rect x="4" y="20" width="32" height="8" fill="blue"/>
+                            <rect x="16" y="4" width="8" height="32" fill="red"/>
+                        </svg>
+                        <span class="text-2xl">?</span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="a">
+                        <input type="radio" name="q23" value="a" class="mr-2"> 
+                        <span class="mr-2">a)</span>
+                        <svg width="40" height="40">
+                            <rect x="20" y="4" width="8" height="32" fill="blue"/>
+                            <rect x="4" y="16" width="32" height="8" fill="red"/>
+                        </svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="b">
+                        <input type="radio" name="q23" value="b" class="mr-2"> 
+                        <span class="mr-2">b)</span>
+                        <svg width="40" height="40">
+                            <rect x="12" y="4" width="8" height="32" fill="blue"/>
+                            <rect x="4" y="24" width="32" height="8" fill="red"/>
+                        </svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="c">
+                        <input type="radio" name="q23" value="c" class="mr-2"> 
+                        <span class="mr-2">c)</span>
+                        <svg width="40" height="40">
+                            <rect x="4" y="12" width="32" height="8" fill="blue"/>
+                            <rect x="24" y="4" width="8" height="32" fill="red"/>
+                        </svg>
+                    </div>
+                    <div class="answer-choice border rounded p-2 flex items-center" data-value="d">
+                        <input type="radio" name="q23" value="d" class="mr-2"> 
+                        <span class="mr-2">d)</span>
+                        <svg width="40" height="40">
+                            <rect x="28" y="4" width="8" height="32" fill="blue"/>
+                            <rect x="4" y="16" width="32" height="8" fill="red"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-red-50 border-l-4 border-red-400">
+                    <strong>Explication :</strong> La barre bleue se déplace vers la droite et la rouge alterne position horizontale
+                </div>
+            </div>
+        </div>
+
+        <!-- Section V : Compréhension -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 fade-in">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-orange-600 flex items-center">
+                    <i class="fas fa-lightbulb mr-2"></i>
+                    V. COMPRÉHENSION ET RAISONNEMENT (8 points)
+                </h2>
+                <div class="section-score bg-orange-100 px-3 py-1 rounded" id="score-section5">
+                    Score: <span class="font-bold">0/2</span>
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="24" data-correct="c">
+                <h4 class="font-bold mb-3">Question 24 (4 points) - Problème de production</h4>
+                <p class="mb-3">Une machine produit 100 unités d'un produit à la minute. Si l'on peut emballer 24 unités dans une caisse, combien de caisses la machine peut-elle remplir en une heure ?</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q24" value="a" class="mr-2"> a) 150 caisses
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q24" value="b" class="mr-2"> b) 200 caisses
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q24" value="c" class="mr-2"> c) 250 caisses
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q24" value="d" class="mr-2"> d) 300 caisses
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-orange-50 border-l-4 border-orange-400">
+                    <strong>Explication :</strong> En 1h = 60min, production = 100×60 = 6000 unités. Caisses = 6000/24 = 250 caisses
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-box bg-gray-50 rounded-lg p-4 mb-4" data-question="25" data-correct="b">
+                <h4 class="font-bold mb-3">Question 25 (4 points) - Problème commercial</h4>
+                <p class="mb-3">Un libraire achète un livre 70€, il le revend 80€ puis le rachète 30€ avant de le revendre 60€ d'occasion. Quel est son bénéfice total ?</p>
+                <div class="space-y-2">
+                    <div class="answer-choice border rounded p-2" data-value="a">
+                        <input type="radio" name="q25" value="a" class="mr-2"> a) 10€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="b">
+                        <input type="radio" name="q25" value="b" class="mr-2"> b) 20€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="c">
+                        <input type="radio" name="q25" value="c" class="mr-2"> c) 30€
+                    </div>
+                    <div class="answer-choice border rounded p-2" data-value="d">
+                        <input type="radio" name="q25" value="d" class="mr-2"> d) 40€
+                    </div>
+                </div>
+                <div class="explanation hidden mt-3 p-3 bg-orange-50 border-l-4 border-orange-400">
+                    <strong>Explication :</strong> Transaction 1: 80-70 = +10€. Transaction 2: 60-30 = +30€. Total = 40€
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 text-center fade-in">
+            <div class="flex justify-center space-x-4">
+                <button onclick="checkAnswers()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg flex items-center">
+                    <i class="fas fa-check mr-2"></i>
+                    Corriger le QCM
+                </button>
+                <button onclick="resetQuiz()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg flex items-center">
+                    <i class="fas fa-redo mr-2"></i>
+                    Recommencer
+                </button>
+                <button onclick="saveResults()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg flex items-center" id="saveBtn" style="display: none;">
+                    <i class="fas fa-save mr-2"></i>
+                    Sauvegarder
+                </button>
+            </div>
+        </div>
+
+        <!-- Résultats -->
+        <div id="results" class="bg-white rounded-lg shadow-md p-6 mb-8 fade-in hidden">
+            <h2 class="text-2xl font-bold text-center mb-6">Résultats du QCM</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-6">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-blue-600" id="finalScore">0/25</div>
+                    <div class="text-lg text-gray-600">Score total</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-green-600" id="finalPercentage">0%</div>
+                    <div class="text-lg text-gray-600">Pourcentage</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600" id="finalGrade">F</div>
+                    <div class="text-lg text-gray-600">Niveau</div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-4 mb-6">
+                <div class="bg-blue-50 p-3 rounded text-center">
+                    <div class="font-bold text-blue-600" id="section1-result">0/8</div>
+                    <div class="text-sm">Maths de base</div>
+                </div>
+                <div class="bg-green-50 p-3 rounded text-center">
+                    <div class="font-bold text-green-600" id="section2-result">0/7</div>
+                    <div class="text-sm">Géométrie</div>
+                </div>
+                <div class="bg-purple-50 p-3 rounded text-center">
+                    <div class="font-bold text-purple-600" id="section3-result">0/5</div>
+                    <div class="text-sm">Fonctions</div>
+                </div>
+                <div class="bg-red-50 p-3 rounded text-center">
+                    <div class="font-bold text-red-600" id="section4-result">0/3</div>
+                    <div class="text-sm">Logique</div>
+                </div>
+                <div class="bg-orange-50 p-3 rounded text-center">
+                    <div class="font-bold text-orange-600" id="section5-result">0/2</div>
+                    <div class="text-sm">Raisonnement</div>
+                </div>
+            </div>
+
+            <div id="feedback" class="bg-gray-50 p-4 rounded-lg">
+                <!-- Feedback personnalisé sera inséré ici -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let timerRunning = false;
+        let timeLeft = 90 * 60; // 90 minutes en secondes
+        let timerInterval;
+        let answers = {};
+        let corrected = false;
+
+        // Données des questions
+        const questionsData = {
+            1: { section: 1, correct: 'b' },
+            2: { section: 1, correct: 'b' },
+            3: { section: 1, correct: 'c' },
+            4: { section: 1, correct: 'a' },
+            5: { section: 1, correct: 'b' },
+            6: { section: 1, correct: 'b' },
+            7: { section: 1, correct: 'a' },
+            8: { section: 1, correct: 'b' },
+            9: { section: 2, correct: 'b' },
+            10: { section: 2, correct: 'b' },
+            11: { section: 2, correct: 'c' },
+            12: { section: 2, correct: 'b' },
+            13: { section: 2, correct: 'b' },
+            14: { section: 2, correct: 'a' },
+            15: { section: 2, correct: 'd' },
+            16: { section: 3, correct: 'b' },
+            17: { section: 3, correct: 'd' },
+            18: { section: 3, correct: 'c' },
+            19: { section: 3, correct: 'c' },
+            20: { section: 3, correct: 'b' },
+            21: { section: 4, correct: 'c' },
+            22: { section: 4, correct: 'a' },
+            23: { section: 4, correct: 'a' },
+            24: { section: 5, correct: 'c' },
+            25: { section: 5, correct: 'd' }
+        };
+
+        const sectionTotals = { 1: 8, 2: 7, 3: 5, 4: 3, 5: 2 };
+
+        // Timer
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimer() {
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Temps écoulé ! Le QCM va être corrigé automatiquement.');
+                checkAnswers();
+            } else {
+                timeLeft--;
+            }
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timerBtn');
+            if (timerRunning) {
+                clearInterval(timerInterval);
+                btn.innerHTML = '<i class="fas fa-play"></i>';
+                btn.classList.remove('bg-red-500');
+                btn.classList.add('bg-blue-500');
+            } else {
+                timerInterval = setInterval(updateTimer, 1000);
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+                btn.classList.remove('bg-blue-500');
+                btn.classList.add('bg-red-500');
+            }
+            timerRunning = !timerRunning;
+        }
+
+        // Gestion des réponses
+        document.addEventListener('DOMContentLoaded', function() {
+            // Écouter les changements de réponses
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    const questionNum = this.name.substring(1); // Enlever le 'q'
+                    answers[questionNum] = this.value;
+                    
+                    // Mettre en surbrillance la réponse sélectionnée
+                    const questionBox = this.closest('.question-box');
+                    questionBox.querySelectorAll('.answer-choice').forEach(choice => {
+                        choice.classList.remove('selected');
+                    });
+                    this.closest('.answer-choice').classList.add('selected');
+                    
+                    updateProgress();
+                });
+            });
+        });
+
+        function updateProgress() {
+            const totalAnswered = Object.keys(answers).length;
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            const percentage = (totalAnswered / 25) * 100;
+            progressBar.style.width = percentage + '%';
+            progressText.textContent = `${totalAnswered}/25`;
+            
+            // Mise à jour du score en temps réel
+            updateScore();
+        }
+
+        function updateScore() {
+            if (corrected) return;
+            
+            let totalCorrect = 0;
+            const sectionScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+            
+            for (let questionNum in answers) {
+                const userAnswer = answers[questionNum];
+                const correctAnswer = questionsData[questionNum].correct;
+                const section = questionsData[questionNum].section;
+                
+                if (userAnswer === correctAnswer) {
+                    totalCorrect++;
+                    sectionScores[section]++;
+                }
+            }
+            
+            document.getElementById('currentScore').textContent = `${totalCorrect}/25`;
+            document.getElementById('currentPercentage').textContent = `${Math.round((totalCorrect/25)*100)}%`;
+        }
+
+        function checkAnswers() {
+            if (Object.keys(answers).length < 25) {
+                if (!confirm('Vous n\'avez pas répondu à toutes les questions. Voulez-vous continuer la correction ?')) {
+                    return;
+                }
+            }
+
+            corrected = true;
+            clearInterval(timerInterval);
+            
+            let totalCorrect = 0;
+            const sectionScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+            
+            // Vérifier chaque réponse et afficher les corrections
+            for (let questionNum = 1; questionNum <= 25; questionNum++) {
+                const userAnswer = answers[questionNum];
+                const correctAnswer = questionsData[questionNum].correct;
+                const section = questionsData[questionNum].section;
+                const questionBox = document.querySelector(`[data-question="${questionNum}"]`);
+                
+                if (userAnswer === correctAnswer) {
+                    totalCorrect++;
+                    sectionScores[section]++;
+                    questionBox.classList.add('correct');
+                } else {
+                    questionBox.classList.add('incorrect');
+                }
+                
+                // Afficher la bonne réponse
+                const choices = questionBox.querySelectorAll('.answer-choice');
+                choices.forEach(choice => {
+                    const value = choice.dataset.value;
+                    if (value === correctAnswer) {
+                        choice.classList.add('correct');
+                    } else if (value === userAnswer && value !== correctAnswer) {
+                        choice.classList.add('incorrect');
+                    }
+                });
+                
+                // Afficher l'explication
+                const explanation = questionBox.querySelector('.explanation');
+                if (explanation) {
+                    explanation.classList.remove('hidden');
+                }
+            }
+            
+            // Mettre à jour les scores de section
+            for (let section = 1; section <= 5; section++) {
+                const sectionElement = document.getElementById(`score-section${section}`);
+                const total = sectionTotals[section];
+                const score = sectionScores[section];
+                sectionElement.querySelector('span').textContent = `${score}/${total}`;
+            }
+            
+            // Afficher les résultats finaux
+            displayResults(totalCorrect, sectionScores);
+            
+            // Afficher le bouton de sauvegarde
+            document.getElementById('saveBtn').style.display = 'inline-flex';
+        }
+
+        function displayResults(totalCorrect, sectionScores) {
+            const percentage = Math.round((totalCorrect / 25) * 100);
+            let grade, feedback;
+            
+            if (percentage >= 90) {
+                grade = 'A+';
+                feedback = '🎉 Excellent ! Vous maîtrisez parfaitement les concepts mathématiques. Félicitations !';
+            } else if (percentage >= 80) {
+                grade = 'A';
+                feedback = '👏 Très bien ! Vous avez une bonne compréhension des mathématiques. Quelques points à améliorer.';
+            } else if (percentage >= 70) {
+                grade = 'B';
+                feedback = '👍 Bon niveau ! Vous comprenez la plupart des concepts. Continuez à vous exercer.';
+            } else if (percentage >= 60) {
+                grade = 'C';
+                feedback = '😐 Niveau moyen. Il serait bénéfique de revoir certains concepts fondamentaux.';
+            } else if (percentage >= 50) {
+                grade = 'D';
+                feedback = '😟 Niveau insuffisant. Un travail supplémentaire est nécessaire sur les bases.';
+            } else {
+                grade = 'F';
+                feedback = '😱 Niveau très faible. Il est recommandé de reprendre les bases avec un soutien pédagogique.';
+            }
+            
+            document.getElementById('finalScore').textContent = `${totalCorrect}/25`;
+            document.getElementById('finalPercentage').textContent = `${percentage}%`;
+            document.getElementById('finalGrade').textContent = grade;
+            
+            // Afficher les résultats par section
+            for (let section = 1; section <= 5; section++) {
+                const total = sectionTotals[section];
+                const score = sectionScores[section];
+                document.getElementById(`section${section}-result`).textContent = `${score}/${total}`;
+            }
+            
+            // Feedback détaillé
+            let detailedFeedback = `<h3 class="font-bold mb-2">Analyse de vos résultats :</h3><p class="mb-4">${feedback}</p>`;
+            
+            detailedFeedback += '<div class="grid md:grid-cols-5 gap-2 text-sm">';
+            const sectionNames = ['Maths de base', 'Géométrie', 'Fonctions', 'Logique', 'Raisonnement'];
+            
+            for (let section = 1; section <= 5; section++) {
+                const score = sectionScores[section];
+                const total = sectionTotals[section];
+                const sectionPercentage = Math.round((score / total) * 100);
+                let sectionFeedback;
+                
+                if (sectionPercentage >= 80) {
+                    sectionFeedback = '✅ Maîtrisé';
+                } else if (sectionPercentage >= 60) {
+                    sectionFeedback = '⚠️ À améliorer';
+                } else {
+                    sectionFeedback = '❌ À retravailler';
+                }
+                
+                detailedFeedback += `<div class="text-center p-2 bg-gray-100 rounded">
+                    <div class="font-bold">${sectionNames[section-1]}</div>
+                    <div>${sectionPercentage}%</div>
+                    <div class="text-xs">${sectionFeedback}</div>
+                </div>`;
+            }
+            
+            detailedFeedback += '</div>';
+            
+            document.getElementById('feedback').innerHTML = detailedFeedback;
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Scroll vers les résultats
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            if (confirm('Êtes-vous sûr de vouloir recommencer le QCM ? Toutes vos réponses seront perdues.')) {
+                answers = {};
+                corrected = false;
+                timeLeft = 90 * 60;
+                
+                // Reset des inputs
+                document.querySelectorAll('input[type="radio"]').forEach(input => {
+                    input.checked = false;
+                });
+                
+                // Reset des styles
+                document.querySelectorAll('.question-box').forEach(box => {
+                    box.classList.remove('correct', 'incorrect');
+                });
+                
+                document.querySelectorAll('.answer-choice').forEach(choice => {
+                    choice.classList.remove('correct', 'incorrect', 'selected');
+                });
+                
+                document.querySelectorAll('.explanation').forEach(explanation => {
+                    explanation.classList.add('hidden');
+                });
+                
+                // Reset des scores
+                document.getElementById('currentScore').textContent = '0/25';
+                document.getElementById('currentPercentage').textContent = '0%';
+                document.getElementById('progressBar').style.width = '0%';
+                document.getElementById('progressText').textContent = '0/25';
+                
+                // Cacher les résultats
+                document.getElementById('results').classList.add('hidden');
+                document.getElementById('saveBtn').style.display = 'none';
+                
+                // Reset timer
+                clearInterval(timerInterval);
+                timerRunning = false;
+                document.getElementById('timerBtn').innerHTML = '<i class="fas fa-play"></i>';
+                document.getElementById('timerBtn').classList.remove('bg-red-500');
+                document.getElementById('timerBtn').classList.add('bg-blue-500');
+                document.getElementById('timer').textContent = formatTime(timeLeft);
+                
+                // Scroll vers le haut
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function saveResults() {
+            const totalCorrect = Object.keys(answers).filter(q => answers[q] === questionsData[q].correct).length;
+            const percentage = Math.round((totalCorrect / 25) * 100);
+            const date = new Date().toLocaleString('fr-FR');
+            
+            const results = {
+                date: date,
+                score: totalCorrect,
+                total: 25,
+                percentage: percentage,
+                answers: answers,
+                timeSpent: 90 * 60 - timeLeft
+            };
+            
+            // Sauvegarde dans localStorage
+            const savedResults = JSON.parse(localStorage.getItem('qcm_results') || '[]');
+            savedResults.push(results);
+            localStorage.setItem('qcm_results', JSON.stringify(savedResults));
+            
+            // Téléchargement des résultats
+            const dataStr = JSON.stringify(results, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `QCM_Maths_${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            alert('Résultats sauvegardés avec succès !');
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
